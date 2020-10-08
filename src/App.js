@@ -5,7 +5,6 @@ import ModalInnerView from "./Components/ModalInnerView";
 import FloatingAddButton from "./Components/FloatingAddButton";
 import TodoList from "./Components/TodoList";
 import SearchBox from "./Components/SearchBox";
-import ModalToDoViewDetails from "./Components/ModalToDoDetailsView";
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +38,8 @@ class App extends Component {
     this.setState({ title: "", description: "" });
   };
 
+  
+
   completedToDo = id => {
     const { allTodos } = this.state;
     const todoIndex = this.state.allTodos.findIndex(todo => todo.id === id);
@@ -52,25 +53,23 @@ class App extends Component {
     let todoItem = {};
     const { title, description } = this.state;
     if (!title) return;
-    //getting previous stored localstorage
+    
     const previousList = JSON.parse(localStorage.getItem("todos"));
     if (previousList !== "" && Array.isArray(previousList)) {
       todosList = [...previousList];
     }
-    //generating id based on milliseconds
+    
     const d = new Date();
     const id = d.valueOf();
     todoItem = { id: id, title, description, completed: false };
     todosList.push(todoItem);
-    //setting up local storage
     this.updateLocalStorage(todosList);
-    //updating state
     this.updateTodo(todosList);
-    //clearing state and hiding modal
     this.toggleModal();
     this.resetData();
   };
-
+  
+  
   updateTodo = allTodos => {
     this.setState({ allTodos });
   };
@@ -132,8 +131,7 @@ class App extends Component {
       description,
       showTodoType,
       searchTerm,
-      showDetailsModal,
-      showDetailsOf
+      showDetailsModal
     } = this.state;
 
     const listOfTodos = this.filterWithSearchTerm(
@@ -143,7 +141,9 @@ class App extends Component {
 
     return (
       <div className="container">
+        
         <div className="todo-wrapper">
+        
           {listOfTodos.length > 1 || searchTerm !== "" ? (
             <SearchBox onChange={this.searchTodo} />
           ) : null}
@@ -167,8 +167,8 @@ class App extends Component {
               cancel={this.toggleModal}
             />
           </ModalView>
-          
         </div>
+        
       </div>
     );
   }
