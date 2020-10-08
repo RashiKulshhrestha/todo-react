@@ -38,8 +38,6 @@ class App extends Component {
     this.setState({ title: "", description: "" });
   };
 
-  
-
   completedToDo = id => {
     const { allTodos } = this.state;
     const todoIndex = this.state.allTodos.findIndex(todo => todo.id === id);
@@ -108,6 +106,7 @@ class App extends Component {
 
   filterWithSearchTerm = (searchTerm, todoList) => {
     const pattern = new RegExp(`^.*${searchTerm}.*$`);
+    // eslint-disable-next-line
     return todoList.filter((item) => {
       if (pattern.test(item.title) || pattern.test(item.description)) {
         return item;
